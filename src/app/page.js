@@ -463,7 +463,7 @@ export default function HomePage() {
 
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
-                href="/register"
+                href="/auth/register"
                 className="inline-flex h-12 items-center rounded-xl bg-white px-6 font-semibold text-ink transition hover:bg-white/90"
               >
                 Create free account

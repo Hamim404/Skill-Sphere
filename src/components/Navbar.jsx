@@ -19,7 +19,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  const isActive = (href) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-ink/70 backdrop-blur-xl">
@@ -33,7 +34,9 @@ export default function Navbar() {
               key={l.href}
               href={l.href}
               className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                isActive(l.href) ? "bg-white/10 text-white" : "text-mist hover:text-white"
+                isActive(l.href)
+                  ? "bg-white/10 text-white"
+                  : "text-mist hover:text-white"
               }`}
             >
               {l.label}
@@ -47,7 +50,11 @@ export default function Navbar() {
             <>
               <div className="grid size-9 place-items-center overflow-hidden rounded-full bg-ink-3 text-sm font-bold ring-2 ring-mint">
                 {user.photo ? (
-                  <img src={user.photo} alt={user.name} className="size-full object-cover" />
+                  <img
+                    src={user.photo}
+                    alt={user.name}
+                    className="size-full object-cover"
+                  />
                 ) : (
                   user.name[0]
                 )}
@@ -59,13 +66,13 @@ export default function Navbar() {
           ) : (
             <>
               <Link
-                href="/login"
+                href="/auth/login"
                 className="hidden rounded-xl px-4 py-2 text-sm font-medium text-mist transition hover:text-white sm:block"
               >
                 Login
               </Link>
               <Link
-                href="/register"
+                href="/auth/register"
                 className="rounded-xl bg-orbit px-4 py-2 text-sm font-semibold text-white shadow-[0_0_24px_rgba(123,92,255,0.5)] transition hover:bg-orbit-soft"
               >
                 Register
@@ -86,7 +93,10 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <nav className="border-t border-white/10 bg-ink/95 px-5 py-4 sm:hidden" aria-label="Mobile">
+        <nav
+          className="border-t border-white/10 bg-ink/95 px-5 py-4 sm:hidden"
+          aria-label="Mobile"
+        >
           {links.map((l) => (
             <Link
               key={l.href}
@@ -98,7 +108,11 @@ export default function Navbar() {
             </Link>
           ))}
           {!user && (
-            <Link href="/login" onClick={() => setOpen(false)} className="block py-2.5 text-lg text-white">
+            <Link
+              href="/auth/login"
+              onClick={() => setOpen(false)}
+              className="block py-2.5 text-lg text-white"
+            >
               Login
             </Link>
           )}
