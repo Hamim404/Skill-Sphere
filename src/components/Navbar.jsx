@@ -8,7 +8,7 @@ import Logo from "./Logo";
 const links = [
   { href: "/", label: "Home" },
   { href: "/courses", label: "Courses" },
-  { href: "/my-profile", label: "My Profile" },
+  { href: "/profile", label: "My Profile" },
 ];
 
 // TODO: replace with your real auth session.

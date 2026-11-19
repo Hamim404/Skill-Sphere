@@ -20,7 +20,8 @@ export default function Footer() {
         <div>
           <Logo />
           <p className="mt-4 max-w-xs text-sm text-mist">
-            Practical, expert-led courses in development, design, marketing and data. Learn at your pace, ship real work.
+            Practical, expert-led courses in development, design, marketing and
+            data. Learn at your pace, ship real work.
           </p>
           <div className="mt-6 flex gap-3">
             {socials.map(({ icon: Icon, label }) => (
@@ -40,10 +41,26 @@ export default function Footer() {
         <nav aria-label="Explore">
           <h4 className="mb-4 font-semibold">Explore</h4>
           <ul className="space-y-2.5 text-sm text-mist">
-            <li><Link className="hover:text-white" href="/">Home</Link></li>
-            <li><Link className="hover:text-white" href="/courses">Courses</Link></li>
-            <li><Link className="hover:text-white" href="/my-profile">My Profile</Link></li>
-            <li><Link className="hover:text-white" href="/faq">FAQ</Link></li>
+            <li>
+              <Link className="hover:text-white" href="/">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-white" href="/courses">
+                Courses
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-white" href="/profile">
+                My Profile
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-white" href="/faq">
+                FAQ
+              </Link>
+            </li>
           </ul>
         </nav>
 
@@ -51,8 +68,16 @@ export default function Footer() {
         <nav aria-label="Legal">
           <h4 className="mb-4 font-semibold">Legal</h4>
           <ul className="space-y-2.5 text-sm text-mist">
-            <li><Link className="hover:text-white" href="/terms">Terms &amp; Conditions</Link></li>
-            <li><Link className="hover:text-white" href="/privacy">Privacy Policy</Link></li>
+            <li>
+              <Link className="hover:text-white" href="/terms">
+                Terms &amp; Conditions
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-white" href="/privacy">
+                Privacy Policy
+              </Link>
+            </li>
           </ul>
         </nav>
 
@@ -60,9 +85,18 @@ export default function Footer() {
         <div>
           <h4 className="mb-4 font-semibold">Contact</h4>
           <ul className="space-y-3 text-sm text-mist">
-            <li className="flex items-center gap-2.5"><Mail size={16} className="text-mint" />hello@skillsphere.com</li>
-            <li className="flex items-center gap-2.5"><Phone size={16} className="text-mint" />+880 1700 000 000</li>
-            <li className="flex items-center gap-2.5"><MapPin size={16} className="text-mint" />Dhaka, Bangladesh</li>
+            <li className="flex items-center gap-2.5">
+              <Mail size={16} className="text-mint" />
+              hello@skillsphere.com
+            </li>
+            <li className="flex items-center gap-2.5">
+              <Phone size={16} className="text-mint" />
+              +880 1700 000 000
+            </li>
+            <li className="flex items-center gap-2.5">
+              <MapPin size={16} className="text-mint" />
+              Dhaka, Bangladesh
+            </li>
           </ul>
         </div>
       </div>
