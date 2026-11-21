@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
+import Image from "next/image";
+import { authClient, signOut } from "@/lib/auth-client";
 
 const links = [
   { href: "/", label: "Home" },
@@ -13,9 +15,10 @@ const links = [
 
 // TODO: replace with your real auth session.
 // Set to { name: "Test", photo: "" } to preview the logged-in design.
-const user = null;
 
 export default function Navbar() {
+  const { data, isPending } = authClient.useSession();
+  const user = data?.user;
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -46,11 +49,18 @@ export default function Navbar() {
 
         {/* Right side: logged in / logged out */}
         <div className="flex items-center gap-2">
-          {user ? (
+          {isPending ? (
+            <div className="flex items-center gap-2" aria-hidden="true">
+              <div className="size-9 animate-pulse rounded-full bg-white/10" />
+              <div className="h-9 w-[84px] animate-pulse rounded-xl bg-white/10" />
+            </div>
+          ) : user ? (
             <>
               <div className="grid size-9 place-items-center overflow-hidden rounded-full bg-ink-3 text-sm font-bold ring-2 ring-mint">
                 {user.photo ? (
-                  <img
+                  <Image
+                    width={100}
+                    height={100}
                     src={user.photo}
                     alt={user.name}
                     className="size-full object-cover"
@@ -59,7 +69,10 @@ export default function Navbar() {
                   user.name[0]
                 )}
               </div>
-              <button className="rounded-xl border border-white/20 px-4 py-2 text-sm font-medium transition hover:bg-white/10">
+              <button
+                onClick={() => signOut()}
+                className="cursor-pointer rounded-xl border border-white/20 px-4 py-2 text-sm font-medium transition hover:bg-white/10"
+              >
                 Logout
               </button>
             </>

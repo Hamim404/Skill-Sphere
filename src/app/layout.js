@@ -2,6 +2,7 @@ import { Bricolage_Grotesque, Figtree } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -35,6 +36,14 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning
       >
         <Navbar />
+        <Toaster
+        position="top-right"
+        reverseOrder={true}
+        containerStyle={{
+          top: 30, // Pushes the toast below your navbar (adjust based on navbar height)
+          zIndex: 99999, // Ensures it stays above the navbar
+        }}
+      />
         <main>{children}</main>
         <Footer />
       </body>

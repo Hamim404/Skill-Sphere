@@ -1,6 +1,9 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage() {
@@ -9,10 +12,19 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const onSubmit = (data) => {
-    // TODO: login logic here (toast on error, redirect to Home on success)
-    console.log(data);
+  const router = useRouter();
+  const onSubmit = async (formData) => {
+    const { data, error } = await authClient.signIn.email({
+      ...formData,
+      callbackURL: "/", // An optional URL to redirect to after the user signs in. (optional)
+    });
+    if (data) {
+      toast .success("Logged in successfully.");
+      router.push("/");
+    }
+    if (error) {
+      toast.error(error.message);
+    }
   };
 
   return (

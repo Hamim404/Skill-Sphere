@@ -1,5 +1,8 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 
@@ -12,10 +15,19 @@ export default function RegisterPage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const onSubmit = (data) => {
-    // TODO: register logic here (toast on error, go to Login on success)
-    console.log(data);
+  const router = useRouter();
+  const onSubmit = async (formData) => {
+    const { data, error } = await authClient.signUp.email({
+      ...formData,
+      callbackURL: "/",
+    });
+    if (data) {
+      toast.success("Account created successfully.");
+      router.push("/");
+    }
+    if (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
