@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import Image from "next/image";
-import { authClient, signOut } from "@/lib/auth-client";
+import { signOut, useSession } from "@/lib/auth-client";
 
 const links = [
   { href: "/", label: "Home" },
@@ -17,7 +17,7 @@ const links = [
 // Set to { name: "Test", photo: "" } to preview the logged-in design.
 
 export default function Navbar() {
-  const { data, isPending } = authClient.useSession();
+  const { data, isPending } = useSession();
   const user = data?.user;
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
