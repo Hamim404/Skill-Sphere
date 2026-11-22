@@ -57,11 +57,11 @@ export default function Navbar() {
           ) : user ? (
             <>
               <div className="grid size-9 place-items-center overflow-hidden rounded-full bg-ink-3 text-sm font-bold ring-2 ring-mint">
-                {user.photo ? (
+                {user?.image ? (
                   <Image
                     width={100}
                     height={100}
-                    src={user.photo}
+                    src={user?.image}
                     alt={user.name}
                     className="size-full object-cover"
                   />

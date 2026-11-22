@@ -1,9 +1,9 @@
 "use client";
-import { authClient } from "@/lib/auth-client";
+import { authClient, signInWithGoogle } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 
 const inputCls =
@@ -24,6 +24,7 @@ export default function RegisterPage() {
     if (data) {
       toast.success("Account created successfully.");
       router.push("/");
+      router.refresh();
     }
     if (error) {
       toast.error(error.message);
@@ -73,11 +74,11 @@ export default function RegisterPage() {
               type="url"
               placeholder="Photo URL"
               className={inputCls}
-              {...register("photo", { required: "Photo URL is required" })}
+              {...register("image", { required: "Photo URL is required" })}
             />
-            {errors.photo && (
+            {errors.image && (
               <p className="mt-1.5 text-sm text-coral">
-                {errors.photo.message}
+                {errors.image.message}
               </p>
             )}
           </div>
@@ -98,7 +99,7 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            className="h-12 w-full rounded-xl bg-orbit font-semibold text-white shadow-[0_0_30px_rgba(123,92,255,0.45)] transition hover:bg-orbit-soft"
+            className="h-12 w-full rounded-xl bg-orbit font-semibold text-white shadow-[0_0_30px_rgba(123,92,255,0.45)] transition hover:bg-orbit-soft cursor-pointer"
           >
             Register
           </button>
@@ -112,7 +113,8 @@ export default function RegisterPage() {
         {/* TODO: Google signup logic here */}
         <button
           type="button"
-          className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-white/20 font-medium transition hover:bg-white/5"
+          onClick={signInWithGoogle}
+          className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-white/20 font-medium transition hover:bg-white/5 cursor-pointer"
         >
           <FcGoogle size={20} /> Sign up with Google
         </button>
