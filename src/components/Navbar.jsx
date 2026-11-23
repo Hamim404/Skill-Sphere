@@ -1,22 +1,19 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import Image from "next/image";
 import { signOut, useSession } from "@/lib/auth-client";
-
 const links = [
   { href: "/", label: "Home" },
   { href: "/courses", label: "Courses" },
   { href: "/profile", label: "My Profile" },
 ];
 
-// TODO: replace with your real auth session.
-// Set to { name: "Test", photo: "" } to preview the logged-in design.
-
 export default function Navbar() {
+  const router = useRouter();
   const { data, isPending } = useSession();
   const user = data?.user;
   const pathname = usePathname();
@@ -70,7 +67,15 @@ export default function Navbar() {
                 )}
               </div>
               <button
-                onClick={() => signOut()}
+                onClick={async () => {
+                  await signOut({
+                    fetchOptions: {
+                      onSuccess: () => {
+                        router.refresh();
+                      },
+                    },
+                  });
+                }}
                 className="cursor-pointer rounded-xl border border-white/20 px-4 py-2 text-sm font-medium transition hover:bg-white/10"
               >
                 Logout

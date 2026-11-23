@@ -19,102 +19,19 @@ import {
 } from "lucide-react";
 
 import Link from "next/link";
-import courses from "@/data/courses.json";
 import CourseCard from "@/components/CourseCard";
 import Reveal from "@/components/Reveal";
+import {
+  categories,
+  chips,
+  headline,
+  instructors,
+  popular,
+  stats,
+  tips,
+  trending,
+} from "@/data/home";
 
-const categories = [
-  "Web Development",
-  "UI/UX Design",
-  "Digital Marketing",
-  "Data Science",
-  "Mobile Apps",
-  "Brand & Motion",
-  "Product Management",
-  "Cyber Security",
-  "Photography",
-];
-const headline = ["Upgrade", "your", "skills", "today."];
-
-const stats = [
-  { value: "48k+", label: "Active learners" },
-  { value: "320", label: "Expert-led lessons" },
-  { value: "4.8", label: "Average rating" },
-];
-
-const chips = [
-  {
-    icon: Code2,
-    label: "Web Dev",
-    angle: 0,
-    ring: 1,
-    color: "text-orbit-soft",
-  },
-  { icon: Palette, label: "Design", angle: 120, ring: 1, color: "text-coral" },
-  {
-    icon: Megaphone,
-    label: "Marketing",
-    angle: 240,
-    ring: 1,
-    color: "text-amber",
-  },
-  { icon: BarChart3, label: "Data", angle: 70, ring: 2, color: "text-mint" },
-];
-const tips = [
-  {
-    icon: Timer,
-    title: "Study in focused sprints",
-    text: "25 minutes of deep work, 5 minutes away from the screen. Repeat four times, then take a longer break.",
-  },
-  {
-    icon: Brain,
-    title: "Teach it back",
-    text: "Explain what you just learned in your own words. If you can't, rewatch that lesson once.",
-  },
-  {
-    icon: CalendarCheck,
-    title: "Block your learning time",
-    text: "Put lessons on your calendar like meetings. Small daily slots beat weekend marathons.",
-  },
-  {
-    icon: Hammer,
-    title: "Build while you learn",
-    text: "Ship a tiny project after every module. Real output makes the skill stick.",
-  },
-];
-const instructors = [
-  {
-    name: "Amelia Carter",
-    role: "Product Designer, ex-Figma",
-    students: "12.4k",
-    courses: 6,
-    color: "from-orbit to-coral",
-  },
-  {
-    name: "Liam Walker",
-    role: "Staff Engineer, Vercel alumni",
-    students: "18.1k",
-    courses: 9,
-    color: "from-mint to-orbit",
-  },
-  {
-    name: "Priya Nair",
-    role: "Lead Data Scientist",
-    students: "9.7k",
-    courses: 5,
-    color: "from-amber to-coral",
-  },
-  {
-    name: "Rafiq Ahmed",
-    role: "Growth Marketing Lead",
-    students: "7.3k",
-    courses: 4,
-    color: "from-orbit-soft to-mint",
-  },
-];
-
-const popular = courses.slice(0, 3);
-const trending = courses.slice(3, 6);
 function Chip({ c, counter }) {
   const Icon = c.icon;
   return (
@@ -136,9 +53,66 @@ function Chip({ c, counter }) {
   );
 }
 
+function OrbitHero() {
+  return (
+    <div className="relative mx-auto aspect-square w-full max-w-[520px]">
+      <div className="absolute inset-[18%] animate-pulse-glow rounded-full bg-orbit/40 blur-3xl" />
+      <div className="absolute inset-[6%] animate-spin-slower rounded-full border border-dashed border-white/15" />
+
+      <div className="absolute inset-[20%] animate-spin-slow rounded-full border border-white/15">
+        {chips
+          .filter((c) => c.ring === 1)
+          .map((c) => (
+            <Chip key={c.label} c={c} counter="animate-spin-rev" />
+          ))}
+      </div>
+
+      <div className="absolute inset-[6%] animate-spin-slower rounded-full">
+        {chips
+          .filter((c) => c.ring === 2)
+          .map((c) => (
+            <Chip key={c.label} c={c} counter="animate-spin-rev-slower" />
+          ))}
+      </div>
+
+      <motion.div
+        initial={{ scale: 0.6, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute inset-[36%] rounded-full bg-[radial-gradient(circle_at_30%_25%,#d8ceff,#7b5cff_45%,#2a1b8f_80%)] shadow-[0_0_80px_rgba(123,92,255,0.7),inset_-18px_-20px_40px_rgba(15,12,36,0.55)]"
+      />
+
+      <div className="absolute -left-2 top-[14%] animate-float">
+        <div className="glass flex items-center gap-3 rounded-2xl px-4 py-3 shadow-xl">
+          <span className="grid size-9 place-items-center rounded-xl bg-mint/20 text-mint">
+            <PlayCircle size={18} />
+          </span>
+          <div>
+            <p className="text-xs text-mist">Now playing</p>
+            <p className="text-sm font-semibold">React &amp; Next.js Pro</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute -right-2 bottom-[12%] animate-float [animation-delay:-3s]">
+        <div className="glass flex items-center gap-3 rounded-2xl px-4 py-3 shadow-xl">
+          <span className="grid size-9 place-items-center rounded-xl bg-amber/20 text-amber">
+            <Users size={18} />
+          </span>
+          <div>
+            <p className="text-xs text-mist">Learners this week</p>
+            <p className="text-sm font-semibold">+2,480</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function HomePage() {
   return (
     <>
+      {/* ===== HERO ===== */}
       <section className="relative isolate overflow-hidden">
         <div className="bg-grid absolute inset-0 -z-10" />
         <div className="absolute -left-40 top-20 -z-10 size-[420px] rounded-full bg-orbit/25 blur-3xl" />
@@ -199,19 +173,18 @@ export default function HomePage() {
               transition={{ delay: 1.15 }}
             >
               <Button
-                color="primary"
                 size="lg"
-                endContent={<ArrowRight size={18} />}
-                className="font-semibold shadow-[0_0_40px_rgba(123,92,255,0.55)]"
+                className="bg-orbit font-semibold text-white shadow-[0_0_40px_rgba(123,92,255,0.55)]"
               >
                 Explore courses
+                <ArrowRight size={18} />
               </Button>
               <Button
                 size="lg"
-                variant="bordered"
-                startContent={<Play size={16} />}
-                className="border-white/20"
+                variant="outline"
+                className="border-white/20 text-white"
               >
+                <Play size={16} />
                 Join for free
               </Button>
             </motion.div>
@@ -230,8 +203,11 @@ export default function HomePage() {
               ))}
             </motion.dl>
           </div>
+
+          <OrbitHero />
         </div>
       </section>
+
       {/* ===== MARQUEE ===== */}
       <section
         aria-label="Categories"
@@ -239,7 +215,7 @@ export default function HomePage() {
       >
         <div className="overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]">
           <div className="flex w-max animate-marquee gap-4">
-            {[...categories, ...categories].map((c, i) => (
+            {[...categories, ...categories, ...categories].map((c, i) => (
               <span
                 key={i}
                 className="whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-mist"
@@ -250,75 +226,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {/* ----------------------- */}
-      <div className="relative mx-auto aspect-square w-full max-w-[520px]">
-        <div className="absolute inset-[18%] animate-pulse-glow rounded-full bg-orbit/40 blur-3xl" />
 
-        <div className="absolute inset-[6%] animate-spin-slower rounded-full border border-dashed border-white/15" />
-
-        <div className="absolute inset-[20%] animate-spin-slow rounded-full border border-white/15">
-          {chips
-            .filter((c) => c.ring === 1)
-            .map((c) => (
-              <Chip key={c.label} c={c} counter="animate-spin-rev" />
-            ))}
-        </div>
-
-        <div className="absolute inset-[6%] animate-spin-slower rounded-full">
-          {chips
-            .filter((c) => c.ring === 2)
-            .map((c) => (
-              <Chip key={c.label} c={c} counter="animate-spin-rev-slower" />
-            ))}
-        </div>
-
-        <motion.div
-          className="mt-8 flex flex-wrap gap-3"
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.15 }}
-        >
-          <Button
-            size="lg"
-            className="bg-orbit font-semibold text-white shadow-[0_0_40px_rgba(123,92,255,0.55)]"
-          >
-            Explore courses
-            <ArrowRight size={18} />
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-white/20 text-white"
-          >
-            <Play size={16} />
-            Join for free
-          </Button>
-        </motion.div>
-
-        <div className="absolute -left-2 top-[14%] animate-float">
-          <div className="glass flex items-center gap-3 rounded-2xl px-4 py-3 shadow-xl">
-            <span className="grid size-9 place-items-center rounded-xl bg-mint/20 text-mint">
-              <PlayCircle size={18} />
-            </span>
-            <div>
-              <p className="text-xs text-mist">Now playing</p>
-              <p className="text-sm font-semibold">React &amp; Next.js Pro</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute -right-2 bottom-[12%] animate-float [animation-delay:-3s]">
-          <div className="glass flex items-center gap-3 rounded-2xl px-4 py-3 shadow-xl">
-            <span className="grid size-9 place-items-center rounded-xl bg-amber/20 text-amber">
-              <Users size={18} />
-            </span>
-            <div>
-              <p className="text-xs text-mist">Learners this week</p>
-              <p className="text-sm font-semibold">+2,480</p>
-            </div>
-          </div>
-        </div>
-      </div>
       {/* ===== POPULAR COURSES ===== */}
       <section className="mx-auto max-w-7xl px-5 pt-24">
         <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -346,6 +254,7 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
       {/* ===== LEARNING TIPS ===== */}
       <section className="mx-auto max-w-7xl px-5 pt-24">
         <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-ink-2 p-8 sm:p-12">
@@ -381,7 +290,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== TRENDING COURSES (extra section) ===== */}
+      {/* ===== TRENDING COURSES ===== */}
       <section className="mx-auto max-w-7xl px-5 pt-24">
         <div className="mb-10 max-w-2xl">
           <h2 className="inline-flex items-center gap-3 text-3xl font-bold leading-tight sm:text-4xl">

@@ -1,9 +1,10 @@
+"use client";
+import { useSession } from "@/lib/auth-client";
 import { Mail, BookOpen, Award, Flame } from "lucide-react";
-
-export const metadata = { title: "My Profile | SkillSphere" };
+import Image from "next/image";
+import Loading from "../loading";
 
 // Placeholder data for layout only. Replace with your logged-in user.
-const user = { name: "Your Name", email: "you@example.com", photo: "" };
 
 const items = [
   { icon: BookOpen, label: "Courses enrolled", value: "4" },
@@ -12,6 +13,8 @@ const items = [
 ];
 
 export default function MyProfilePage() {
+  const { data, isPending } = useSession();
+  const user = data?.user;
   return (
     <section className="mx-auto max-w-4xl px-5 py-12">
       <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-ink-2">
@@ -23,23 +26,35 @@ export default function MyProfilePage() {
 
         <div className="px-6 pb-8 sm:px-10">
           {/* Avatar */}
-          <div className="-mt-14 grid size-28 place-items-center overflow-hidden rounded-full bg-ink-3 text-4xl font-bold ring-4 ring-ink-2">
-            {user.photo ? (
-              <img src={user.photo} alt={user.name} className="size-full object-cover" />
+          {/* Avatar */}
+          <div className="relative z-10 -mt-14 grid size-28 place-items-center overflow-hidden rounded-full bg-ink-3 text-4xl font-bold ring-4 ring-ink-2">
+            {isPending ? (
+              <div className="size-full animate-pulse bg-white/10" />
+            ) : user?.image ? (
+              <Image
+                width={100}
+                height={100}
+                src={user.image}
+                alt={user.name}
+                className="size-full object-cover"
+              />
             ) : (
-              user.name[0]
+              user?.name?.[0]
             )}
           </div>
 
-          <h1 className="mt-5 text-3xl font-bold">{user.name}</h1>
+          <h1 className="mt-5 text-3xl font-bold">{user?.name}</h1>
           <p className="mt-1 inline-flex items-center gap-2 text-mist">
-            <Mail size={16} /> {user.email}
+            <Mail size={16} /> {user?.email}
           </p>
 
           {/* Stats */}
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             {items.map(({ icon: Icon, label, value }) => (
-              <div key={label} className="rounded-2xl border border-white/10 bg-ink/60 p-5">
+              <div
+                key={label}
+                className="rounded-2xl border border-white/10 bg-ink/60 p-5"
+              >
                 <Icon size={20} className="text-mint" />
                 <p className="mt-3 font-display text-3xl font-bold">{value}</p>
                 <p className="text-sm text-mist">{label}</p>
