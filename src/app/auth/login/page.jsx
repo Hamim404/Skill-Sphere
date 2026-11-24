@@ -1,10 +1,13 @@
 "use client";
-import { authClient } from "@/lib/auth-client";
+import { authClient, signInWithGoogle } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+
+const inputCls =
+  "w-full rounded-xl border border-white/15 bg-transparent px-4 py-3.5 outline-none transition placeholder:text-mist/70 focus:border-orbit";
 
 export default function LoginPage() {
   const {
@@ -13,14 +16,16 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm();
   const router = useRouter();
+
   const onSubmit = async (formData) => {
     const { data, error } = await authClient.signIn.email({
       ...formData,
-      callbackURL: "/", // An optional URL to redirect to after the user signs in. (optional)
+      callbackURL: "/",
     });
     if (data) {
-      toast .success("Logged in successfully.");
+      toast.success("Logged in successfully.");
       router.push("/");
+      router.refresh();
     }
     if (error) {
       toast.error(error.message);
@@ -43,7 +48,7 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="Email"
-              className="h-13 w-full rounded-xl border border-white/15 bg-transparent px-4 py-3.5 outline-none transition placeholder:text-mist/70 focus:border-orbit"
+              className={inputCls}
               {...register("email", { required: "Email is required" })}
             />
             {errors.email && (
@@ -57,7 +62,7 @@ export default function LoginPage() {
             <input
               type="password"
               placeholder="Password"
-              className="h-13 w-full rounded-xl border border-white/15 bg-transparent px-4 py-3.5 outline-none transition placeholder:text-mist/70 focus:border-orbit"
+              className={inputCls}
               {...register("password", { required: "Password is required" })}
             />
             {errors.password && (
@@ -69,7 +74,7 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="h-12 w-full rounded-xl bg-orbit font-semibold text-white shadow-[0_0_30px_rgba(123,92,255,0.45)] transition hover:bg-orbit-soft"
+            className="h-12 w-full cursor-pointer rounded-xl bg-orbit font-semibold text-white shadow-[0_0_30px_rgba(123,92,255,0.45)] transition hover:bg-orbit-soft"
           >
             Login
           </button>
@@ -80,10 +85,10 @@ export default function LoginPage() {
           <span className="h-px flex-1 bg-white/10" />
         </div>
 
-        {/* TODO: Google login logic here */}
         <button
           type="button"
-          className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-white/20 font-medium transition hover:bg-white/5"
+          onClick={signInWithGoogle}
+          className="flex h-12 w-full cursor-pointer items-center justify-center gap-3 rounded-xl border border-white/20 font-medium transition hover:bg-white/5"
         >
           <FcGoogle size={20} /> Continue with Google
         </button>
